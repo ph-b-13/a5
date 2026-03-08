@@ -102,15 +102,17 @@ const createIssueCard = (issue) => {
 };
 
 const updateTopStats = () => {
-    const stats = {
-        total: state.issues.length,
-        open: state.issues.filter(i => i.status.toLowerCase() === "open").length,
-        closed: state.issues.filter(i => i.status.toLowerCase() === "closed").length
-    };
+    const total = state.issues.length;
+    const open = state.issues.filter(i => i.status.toLowerCase() === "open").length;
+    const closed = state.issues.filter(i => i.status.toLowerCase() === "closed").length;
 
-    document.getElementById("all-issues-count").innerText = stats.total;
-    document.getElementById("open-count").innerText = stats.open;
-    document.getElementById("closed-count").innerText = stats.closed;
+    let dynamicCount = total;
+    if (state.filter === "Open") dynamicCount = open;
+    else if (state.filter === "Closed") dynamicCount = closed;
+
+    document.getElementById("all-issues-count").innerText = dynamicCount;
+    document.getElementById("open-count").innerText = open;
+    document.getElementById("closed-count").innerText = closed;
 };
 
 const generateLabelHTML = (labels = []) => {
@@ -247,6 +249,7 @@ tabIds.forEach(id => {
 
         state.filter = this.innerText.trim();
         renderIssues();
+        updateTopStats();
     });
 });
 
