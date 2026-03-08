@@ -13,21 +13,14 @@ let state = {
 
 const fetchIssues = async (url = API.all, isSearch = false) => {
     toggleLoading(true);
-    try {
-        const res = await fetch(url);
-        if (!res.ok) throw new Error("Failed to fetch data");
-        const data = await res.json();
-        state.issues = data.data || data;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Failed to fetch data");
+    const data = await res.json();
+    state.issues = data.data || data;
 
-        if (isSearch) resetTabActiveState();
-        updateTopStats();
-        renderIssues();
-    } catch (err) {
-        showErrorMessage("Oops! We couldn't sync with the server. Please try again later.");
-        console.error("API Error:", err);
-    } finally {
-        toggleLoading(false);
-    }
+    if (isSearch) resetTabActiveState();
+    updateTopStats();
+    renderIssues();
 };
 
 const renderIssues = () => {
