@@ -21,6 +21,7 @@ const fetchIssues = async (url = API.all, isSearch = false) => {
     if (isSearch) resetTabActiveState();
     updateTopStats();
     renderIssues();
+    toggleLoading(false);
 };
 
 const renderIssues = () => {
