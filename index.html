@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub Issue Tracker</title>
+    <link rel="stylesheet" href="main.css" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-[#f4f7ff] min-h-screen">
+    <!-- login screen -->
+    <div id="login-screen" class="flex flex-col justify-center items-center h-screen bg-[#f4f7ff]">
+        <div
+            class="w-full max-w-md p-10 bg-white rounded-3xl shadow-[0_10px_50px_rgba(0,0,0,0.05)] border border-slate-100">
+            <header class="flex flex-col items-center mb-10">
+                <img src="assets/github-logo.png" alt="GitHub Logo" class="w-20 h-20 mb-6 rounded-full" />
+                <h1 class="text-3xl font-extrabold text-[#111827] tracking-tight">
+                    GitHub Issues Tracker
+                </h1>
+                <p class="text-slate-500 font-medium">
+                    Sign in to manage your projects
+                </p>
+            </header>
+
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-2 ml-1">
+                        Username
+                    </label>
+                    <input type="text" id="username"
+                        class="input input-bordered w-full h-12 bg-slate-50 border-slate-200 focus:bg-white focus:border-[#422ad5] focus:outline-none rounded-xl px-5"
+                        placeholder="Enter Username" />
+                    <p class="text-[#4a00ff]">Default: admin</p>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-2 ml-1">
+                        Password
+                    </label>
+                    <input type="password" id="password"
+                        class="input input-bordered w-full h-12 bg-slate-50 border-slate-200 focus:bg-white focus:border-[#422ad5] focus:outline-none rounded-xl px-5"
+                        placeholder="Enter Password" />
+                    <p class="text-[#4a00ff]">Default: admin123</p>
+                </div>
+                <button id="login-button"
+                    class="btn w-full h-12 mt-4 bg-[#422ad5] hover:bg-[#3520b5] border-none text-white font-bold text-base rounded-xl">
+                    Sign In
+                </button>
+            </div>
+
+            <div class="mt-10 px-6 py-4 bg-slate-50 rounded-xl border border-slate-100 text-center">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">
+                    Demo Access
+                </p>
+                <div class="flex justify-center gap-4">
+                    <p class="text-xs font-medium text-slate-600">
+                        User:
+                        <span class="text-slate-900 font-bold"> admin </span>
+                    </p>
+                    <p class="text-xs font-medium text-slate-600">
+                        Pass:
+                        <span class="text-slate-900 font-bold"> admin123 </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- main dashboard -->
+    <div id="main-screen" class="hidden">
+        <!-- Navbar -->
+        <nav
+            class="bg-white border-b border-slate-100 px-8 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm">
+            <div class="flex items-center gap-3">
+                <img src="assets/github-logo.png" alt="Logo" class="w-8 h-8 rounded-full" />
+                <span class="text-xl font-extrabold text-[#111827] tracking-tighter">
+                    GitHub Issues Tracker
+                </span>
+            </div>
+            <div class="join w-full max-w-xl shadow-sm">
+                <div class="relative w-full join-item">
+                    <span class="absolute inset-y-0 left-4 flex items-center text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </span>
+                    <input type="text" id="search-input"
+                        class="input input-bordered w-full h-11 pl-11 bg-slate-50 border-slate-200 focus:bg-white focus:border-[#422ad5] border-r-0 focus:outline-none rounded-l-xl"
+                        placeholder="Search issues..." />
+                </div>
+                <button id="search-button"
+                    class="btn join-item bg-[#422ad5] border-none hover:bg-[#3520b5] text-white font-bold h-11 px-8 rounded-r-xl">
+                    Search
+                </button>
+            </div>
+        </nav>
+
+        <main class="max-w-7xl mx-auto p-4 md:p-8 space-y-6">
+            <div class="flex gap-2 mb-2">
+                <button id="all-tab"
+                    class="btn btn-sm h-10 px-6 bg-[#422ad5] border-none text-white font-bold rounded-lg transition-all">
+                    All
+                </button>
+                <button id="open-tab"
+                    class="btn btn-sm h-10 px-6 bg-slate-100 border-none hover:bg-slate-200 text-slate-600 font-bold rounded-lg transition-all">
+                    Open
+                </button>
+
+                <button id="closed-tab"
+                    class="btn btn-sm h-10 px-6 bg-slate-100 border-none hover:bg-slate-200 text-slate-600 font-bold rounded-lg transition-all">
+                    Closed
+                </button>
+            </div>
+            <div
+                class="bg-white border border-slate-100 rounded-3xl p-6 shadow-[0_4px_25px_rgba(0,0,0,0.03)] flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-5">
+                    <div
+                        class="w-14 h-14 bg-white rounded-full flex items-center justify-center p-2 shadow-sm border border-slate-50">
+                        <img src="assets/Aperture.png" alt="..." />
+                    </div>
+                    <div>
+                        <h2 class="text-[24px] font-extrabold text-[#111827] leading-none mb-1">
+                            <span id="all-issues-count">0</span>Issues
+                        </h2>
+                        <p class="text-slate-500 text-sm font-medium">
+                            Track and manage your project issues
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-[0.15em]">
+                            Open:
+                            <span id="open-count" class="text-slate-900 ml-1 font-black">0</span>
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#422ad5]"></span>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-[0.15em]">
+                            Closed:
+                            <span id="closed-count" class="text-slate-900 ml-1 font-black">0</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div id="loading-spinner" class="hidden grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-2xl border border-slate-100 p-6 space-y-4 animate-pulse">
+                    <div class="flex justify-between items-start">
+                        <div class="w-8 h-8 bg-slate-50 rounded-full"></div>
+                        <div class="w-16 h-5 bg-slate-50 rounded-lg"></div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="w-3/4 h-6 bg-slate-50 rounded-lg"></div>
+                        <div class="w-full h-5 bg-slate-50 rounded-lg"></div>
+                    </div>
+                    <div
+                        class="pt-4 border-t border-slate-50 flex items-center justify-between text-slate-100 font-black">
+                        <div class="w-24 h-3 bg-slate-50 rounded-lg"></div>
+                        <div class="w-12 h-3 bg-slate-50 rounded-lg"></div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl border border-slate-100 p-6 space-y-4 animate-pulse hidden md:block">
+                    <div class="flex justify-between items-start">
+                        <div class="w-8 h-8 bg-slate-50 rounded-full"></div>
+                        <div class="w-16 h-5 bg-slate-50 rounded-lg"></div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="w-3/4 h-6 bg-slate-50 rounded-lg"></div>
+                        <div class="w-full h-5 bg-slate-50 rounded-lg"></div>
+                    </div>
+                    <div
+                        class="pt-4 border-t border-slate-50 flex items-center justify-between text-slate-100 font-black">
+                        <div class="w-24 h-3 bg-slate-50 rounded-lg"></div>
+                        <div class="w-12 h-3 bg-slate-50 rounded-lg"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Issues Grid -->
+            <div id="issue-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        </main>
+
+        <!-- modal -->
+        <dialog id="issue-modal" class="modal">
+            <div
+                class="modal-box max-w-3xl bg-white p-0 rounded-[2rem] overflow-hidden shadow-2xl border-none relative">
+                <form method="dialog">
+                    <button
+                        class="btn btn-sm btn-square btn-outline border-blue-100 text-[#422ad5] absolute right-8 top-8 hover:bg-blue-50 hover:border-blue-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </form>
+                <div id="modal-content">
+                    <!-- Dynamic Content -->
+                </div>
+            </div>
+            <form method="dialog" class="modal-backdrop bg-slate-900/50 backdrop-blur-sm">
+                <button>close</button>
+            </form>
+        </dialog>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
