@@ -239,17 +239,13 @@ tabIds.forEach(id => {
     document.getElementById(id)?.addEventListener("click", function () {
         tabIds.forEach(tid => {
             const el = document.getElementById(tid);
-            el.classList.replace("bg-[#422ad5]", "bg-white");
-            el.classList.replace("text-white", "text-slate-600");
-            el.classList.add("border-slate-200");
-            el.classList.remove("border-none");
+            el.classList.remove("bg-[#422ad5]", "text-white", "border-none");
+            el.classList.add("bg-slate-100", "text-slate-600");
         });
-        this.classList.replace("bg-white", "bg-[#422ad5]");
-        this.classList.replace("text-slate-600", "text-white");
-        this.classList.remove("border-slate-200");
-        this.classList.add("border-none");
+        this.classList.remove("bg-slate-100", "text-slate-600");
+        this.classList.add("bg-[#422ad5]", "text-white", "border-none");
 
-        state.filter = this.innerText;
+        state.filter = this.innerText.trim();
         renderIssues();
     });
 });
@@ -257,16 +253,12 @@ tabIds.forEach(id => {
 const resetTabActiveState = () => {
     tabIds.forEach(id => {
         const el = document.getElementById(id);
-        el.classList.replace("bg-[#422ad5]", "bg-white");
-        el.classList.replace("text-white", "text-slate-600");
-        el.classList.add("border-slate-200");
-        el.classList.remove("border-none");
+        el.classList.remove("bg-[#422ad5]", "text-white", "border-none");
+        el.classList.add("bg-slate-100", "text-slate-600");
     });
     const allTab = document.getElementById("all-tab");
-    allTab.classList.replace("bg-white", "bg-[#422ad5]");
-    allTab.classList.replace("text-slate-600", "text-white");
-    allTab.classList.remove("border-slate-200");
-    allTab.classList.add("border-none");
+    allTab.classList.remove("bg-slate-100", "text-slate-600");
+    allTab.classList.add("bg-[#422ad5]", "text-white", "border-none");
     state.filter = "All";
 };
 
